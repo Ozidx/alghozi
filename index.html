@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jallaludin Alghozi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0a0c14;
+    --surface:#12162a;
+    --surface-2:#1a1f38;
+    --surface-3:#222847;
+    --cyan:#00e5ff;
+    --magenta:#ff3e9a;
+    --amber:#ffc542;
+    --text:#eceff7;
+    --muted:#8a92b2;
+    --border:#333a5c;
+    --shadow:#000000;
+    --notch:8px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--void);
+    color:var(--text);
+    font-family:'JetBrains Mono', monospace;
+    font-size:16px;
+    line-height:1.6;
+    position:relative;
+    overflow-x:hidden;
+    cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><polygon points='2,2 2,18 6,14 9,20 12,18 9,12 15,12' fill='%23ffc542' stroke='%230a0c14' stroke-width='1.6' stroke-linejoin='round'/></svg>") 2 2, auto;
+  }
+
+  a, button, .btn, .cert-card, .scroll-btn, input, textarea, .contact-card, nav a, .li-badge{
+    cursor:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22'><rect x='9' y='2' width='4' height='6' fill='%2300e5ff'/><rect x='9' y='14' width='4' height='6' fill='%2300e5ff'/><rect x='2' y='9' width='6' height='4' fill='%2300e5ff'/><rect x='14' y='9' width='6' height='4' fill='%2300e5ff'/><rect x='9' y='9' width='4' height='4' fill='%230a0c14' stroke='%2300e5ff' stroke-width='1'/></svg>") 11 11, pointer;
+  }
+
+  /* CRT scanline overlay */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(to bottom, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 3px);
+    z-index:200;
+    mix-blend-mode:overlay;
+  }
+
+  .pixel-font{ font-family:'Press Start 2P', monospace; line-height:1.5; }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--amber); color:var(--void); }
+  :focus-visible{ outline:3px solid var(--amber); outline-offset:3px; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- Pixel notch utility ---------- */
+  .pixel-notch{
+    position:relative;
+    isolation:isolate;
+    clip-path: polygon(
+      0 var(--notch), var(--notch) var(--notch), var(--notch) 0,
+      calc(100% - var(--notch)) 0, calc(100% - var(--notch)) var(--notch), 100% var(--notch),
+      100% calc(100% - var(--notch)), calc(100% - var(--notch)) calc(100% - var(--notch)), calc(100% - var(--notch)) 100%,
+      var(--notch) 100%, var(--notch) calc(100% - var(--notch)), 0 calc(100% - var(--notch))
+    );
+  }
+  .pixel-notch::after{
+    content:"";
+    position:absolute; inset:0;
+    background:var(--shadow);
+    clip-path:inherit;
+    transform:translate(6px,6px);
+    z-index:-1;
+  }
+  .pixel-notch:hover{ filter:brightness(1.1); }
+  .pixel-notch:active{ filter:brightness(0.88); }
+  .notch-sm{ --notch:5px; }
+  .notch-sm::after{ transform:translate(4px,4px); }
+  .notch-lg{ --notch:12px; }
+
+  /* ---------- Top nav ---------- */
+  header.topbar{ position:sticky; top:0; z-index:100; background:var(--surface); border-bottom:3px solid var(--border); }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 24px; max-width:1120px; margin:0 auto; flex-wrap:wrap; }
+  .brand-group{ display:flex; align-items:center; gap:10px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:1rem; letter-spacing:0.5px; }
+  .brand-chip{ width:20px; height:20px; background:var(--amber); border:2px solid var(--void); flex-shrink:0; }
+  .li-badge{ display:flex; align-items:center; justify-content:center; width:30px; height:30px; background:#0a66c2; color:#fff; font-weight:800; font-size:0.78rem; border:2px solid var(--void); }
+  nav.nav-links{ display:flex; flex-wrap:wrap; gap:8px; }
+  nav.nav-links a{ font-size:0.76rem; font-weight:700; padding:9px 14px; background:var(--surface-2); border:2px solid var(--border); white-space:nowrap; transition:background .15s ease, color .15s ease; }
+  nav.nav-links a.active{ background:var(--cyan); color:var(--void); border-color:var(--void); }
+
+  /* ---------- Buttons ---------- */
+  .btn{ display:inline-block; font-family:'JetBrains Mono', monospace; font-weight:700; font-size:0.9rem; padding:13px 22px; border:2px solid var(--void); }
+  .btn-primary{ background:var(--amber); color:var(--void); }
+  .btn-secondary{ background:var(--surface-3); color:var(--text); border-color:var(--cyan); }
+
+  /* ---------- Section title box ---------- */
+  .title-box{ display:inline-block; background:var(--surface-2); border:3px solid var(--border); padding:14px 24px; font-size:1.1rem; margin-bottom:8px; }
+  .section-head{ text-align:center; margin-bottom:44px; }
+  .section-sub{ color:var(--muted); max-width:560px; margin:16px auto 0; text-align:center; font-size:0.92rem; }
+
+  section{ padding:88px 0; border-bottom:1px solid var(--surface-2); position:relative; }
+
+  /* ---------- Hero ---------- */
+  #beranda{ padding-top:64px; overflow:hidden; }
+  .hero-sky{ position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
+  .cloud{ position:absolute; width:64px; height:18px; background:#232a4d; opacity:.6; }
+  .cloud::before{ content:""; position:absolute; top:-9px; left:10px; width:20px; height:9px; background:inherit; }
+  .cloud::after{ content:""; position:absolute; top:-15px; left:30px; width:22px; height:15px; background:inherit; }
+  .cloud-a{ top:12%; animation:drift 48s linear infinite; }
+  .cloud-b{ top:28%; animation:drift 65s linear infinite; animation-delay:-20s; opacity:.4; transform:scale(1.4); }
+  .cloud-c{ top:6%; animation:drift 38s linear infinite; animation-delay:-10s; transform:scale(0.7); }
+  @keyframes drift{ from{ transform:translateX(-120px); } to{ transform:translateX(calc(100vw + 120px)); } }
+
+  .hero-grid{ position:relative; z-index:1; display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:center; }
+  .badge-pill{ display:inline-block; background:var(--surface-2); border:2px solid var(--amber); color:var(--amber); font-size:0.72rem; padding:7px 14px; margin-bottom:22px; }
+  h1.hero-title{ font-size:1.6rem; margin-bottom:20px; color:var(--text); }
+  h1.hero-title span{ color:var(--cyan); }
+  .hero-desc{ color:var(--muted); font-size:0.98rem; max-width:520px; margin-bottom:30px; }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+
+  .hero-photo-wrap{ position:relative; }
+  .hero-photo{ aspect-ratio:4/3; background:var(--surface-2); border:3px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:0.85rem; text-align:center; padding:20px; }
+
+  /* pixel character */
+  .pixel-guy{ position:absolute; right:-14px; bottom:-26px; width:72px; height:90px; animation:bob 1.8s ease-in-out infinite alternate; }
+  @keyframes bob{ from{ transform:translateY(0); } to{ transform:translateY(-6px); } }
+  .pg-hair{ position:absolute; left:12px; top:0; width:48px; height:18px; background:#3b2618; }
+  .pg-head{ position:absolute; left:18px; top:12px; width:36px; height:24px; background:#f0c39a; }
+  .pg-head::before, .pg-head::after{ content:""; position:absolute; top:9px; width:4px; height:4px; background:#1b2035; }
+  .pg-head::before{ left:7px; }
+  .pg-head::after{ left:22px; }
+  .pg-body{ position:absolute; left:12px; top:36px; width:48px; height:28px; background:var(--cyan); }
+  .pg-arm{ position:absolute; top:36px; width:12px; height:22px; background:var(--cyan); transform-origin:top center; animation:swing 1.8s ease-in-out infinite alternate; }
+  .pg-arm-l{ left:0px; }
+  .pg-arm-r{ left:60px; animation-delay:.2s; }
+  @keyframes swing{ from{ transform:rotate(-6deg); } to{ transform:rotate(6deg); } }
+  .pg-leg{ position:absolute; top:64px; width:15px; height:22px; background:#1b2035; animation:march 1.1s ease-in-out infinite; }
+  .pg-leg-l{ left:18px; }
+  .pg-leg-r{ left:39px; animation-delay:.55s; }
+  @keyframes march{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-4px); } }
+
+  /* ---------- Scroll divider ---------- */
+  .scrolldivider{
+    position:relative; height:120px;
+    background:linear-gradient(180deg, var(--void) 0%, #0d1224 45%, #141a33 100%);
+    border-top:3px solid var(--border); border-bottom:3px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(0,229,255,0.07) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(0deg, rgba(0,229,255,0.07) 0 2px, transparent 2px 26px);
+    overflow:hidden;
+  }
+  .scroll-btn{ background:var(--surface); border:2px solid var(--amber); color:var(--amber); font-weight:700; font-size:0.78rem; padding:10px 18px; animation:bounce 1.4s ease-in-out infinite; }
+  @keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(7px); } }
+
+  /* ---------- Tentang + Pencapaian ---------- */
+  .about-flex{ display:grid; grid-template-columns:1.4fr 1fr; gap:40px; align-items:start; }
+  .about-heading{ font-size:1.5rem; font-weight:800; margin-bottom:18px; }
+  .about-copy p{ color:var(--muted); font-size:0.96rem; }
+  .about-copy p + p{ margin-top:16px; }
+  .about-stats{ display:flex; flex-direction:column; gap:18px; }
+  .stat-card{ background:var(--surface); border:3px solid var(--border); padding:22px 18px; text-align:center; }
+  .stat-icon{ font-size:1.5rem; margin-bottom:8px; }
+  .stat-num{ font-family:'Press Start 2P', monospace; font-size:1.1rem; color:var(--amber); margin-bottom:8px; }
+  .stat-label{ font-size:0.78rem; color:var(--muted); }
+
+  /* ---------- Pengalaman ---------- */
+  .exp-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:40px; }
+  .exp-card{ background:var(--surface); border:3px solid var(--border); padding:24px; }
+  .exp-icon{ width:40px; height:40px; background:var(--surface-3); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.1rem; margin-bottom:14px; }
+  .exp-card h3{ font-size:1rem; margin-bottom:10px; }
+  .tag{ display:inline-block; background:var(--surface-3); border:1px solid var(--cyan); color:var(--cyan); font-size:0.7rem; padding:5px 10px; margin-bottom:14px; }
+  .exp-card p{ color:var(--muted); font-size:0.9rem; }
+
+  /* ---------- Sertifikat ---------- */
+  .cert-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:24px; margin-top:44px; }
+  .cert-card{ background:var(--surface-3); overflow:hidden; flex:0 1 250px; max-width:260px; transition:transform .1s ease; }
+  .cert-card:hover{ transform:translateY(-3px); }
+  .cert-thumb-wrap{ aspect-ratio:4/3; overflow:hidden; border-bottom:3px solid var(--border); background:var(--void); }
+  .cert-thumb-wrap img{ width:100%; height:100%; object-fit:cover; display:block; border:3px solid var(--amber); box-sizing:border-box; }
+  .cert-info{ padding:14px; }
+  .cert-info .cname{ font-size:0.86rem; font-weight:800; margin-bottom:4px; }
+  .cert-info .cissuer{ font-size:0.72rem; color:var(--muted); }
+
+  /* ---------- Write Up ---------- */
+  .writeup-list{ display:flex; flex-direction:column; gap:16px; margin-top:40px; max-width:760px; margin-left:auto; margin-right:auto; }
+  .writeup-item{ background:var(--surface); border:3px solid var(--border); padding:20px 24px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; }
+  .writeup-item .wdate{ font-size:0.72rem; color:var(--magenta); margin-bottom:6px; }
+  .writeup-item h3{ font-size:0.95rem; margin-bottom:6px; }
+  .writeup-item p{ font-size:0.85rem; color:var(--muted); }
+  .writeup-item a.readmore{ font-size:0.78rem; color:var(--cyan); font-weight:700; white-space:nowrap; }
+
+  /* ---------- Kontak ---------- */
+  .kontak-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:24px; margin-top:40px; align-items:start; }
+  .form-panel{ background:var(--surface); border:3px dashed var(--border); padding:28px; }
+  .field{ margin-bottom:18px; }
+  .field label{ display:block; font-size:0.8rem; margin-bottom:8px; color:var(--amber); }
+  .field input, .field textarea{ width:100%; background:var(--void); border:2px solid var(--border); color:var(--text); font-family:'JetBrains Mono', monospace; font-size:0.9rem; padding:11px 12px; }
+  .field textarea{ resize:vertical; min-height:110px; }
+  .form-note{ font-size:0.72rem; color:var(--muted); margin-top:12px; }
+  .contact-cards{ display:flex; flex-direction:column; gap:14px; }
+  .contact-card{ background:var(--surface); border:3px solid var(--border); padding:16px 18px; display:flex; align-items:center; gap:14px; }
+  .contact-card .cicon{ width:38px; height:38px; background:var(--surface-3); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .contact-card .clabel{ font-size:0.8rem; font-weight:700; }
+  .contact-card .cvalue{ font-size:0.76rem; color:var(--muted); word-break:break-all; }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--surface); text-align:center; padding:44px 24px; }
+  footer .fbrand{ font-family:'Press Start 2P', monospace; font-size:0.78rem; color:var(--cyan); margin-bottom:14px; }
+  footer .fcopy{ font-size:0.78rem; color:var(--muted); margin-bottom:16px; }
+  footer .fsocials{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+  footer .fsocials a:hover{ color:var(--amber); }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{ position:fixed; inset:0; background:rgba(6,7,14,0.9); display:none; align-items:center; justify-content:center; z-index:300; padding:24px; }
+  .lightbox.open{ display:flex; }
+  .lightbox-box{ background:var(--surface); border:3px solid var(--border); max-width:520px; width:100%; padding:24px; text-align:center; position:relative; max-height:90vh; overflow-y:auto; }
+  .lightbox-box img{ width:100%; height:auto; border:3px solid var(--amber); margin-bottom:16px; }
+  .lightbox-box h3{ font-size:1rem; margin-bottom:6px; }
+  .lightbox-box p{ font-size:0.82rem; color:var(--muted); margin-bottom:16px; }
+  .lb-close{ position:absolute; top:10px; right:10px; background:var(--surface-3); border:2px solid var(--border); width:32px; height:32px; color:var(--text); font-size:1rem; z-index:2; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-photo-wrap{ order:-1; margin-bottom:20px; }
+    .about-flex{ grid-template-columns:1fr; }
+    .about-stats{ flex-direction:row; }
+    .exp-grid{ grid-template-columns:1fr; }
+    .kontak-grid{ grid-template-columns:1fr; }
+    section{ padding:64px 0; }
+  }
+  @media (max-width: 480px){
+    .about-stats{ flex-direction:column; }
+    h1.hero-title{ font-size:1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="nav-inner">
+    <div class="brand-group">
+      <div class="brand"><span class="brand-chip"></span>[username].github.io</div>
+      <a class="li-badge" href="https://www.linkedin.com/in/jallaludin-alghozi-4a1262367/" target="_blank" rel="noopener" aria-label="LinkedIn Jallaludin Alghozi">in</a>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#beranda">Beranda</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#pencapaian">Pencapaian</a>
+      <a href="#pengalaman">Pengalaman</a>
+      <a href="#sertifikat">Sertifikat</a>
+      <a href="#writeup">Write Up</a>
+      <a href="#kontak">Kontak</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- BERANDA -->
+  <section id="beranda">
+    <div class="hero-sky" aria-hidden="true">
+      <span class="cloud cloud-a"></span>
+      <span class="cloud cloud-b"></span>
+      <span class="cloud cloud-c"></span>
+    </div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge-pill">🎮 Selamat datang di dunia pixel-ku</span>
+        <h1 class="hero-title pixel-font">Halo, aku <span>Jallaludin Alghozi!</span></h1>
+        <p class="hero-desc">
+          Cybersecurity Enthusiast yang fokus di bug hunting & vulnerability research. Aku suka
+          membongkar sistem, mencari celah keamanan, dan melaporkannya secara bertanggung jawab
+          ke instansi terkait.
+        </p>
+        <div class="hero-actions">
+          <a href="#pencapaian" class="btn btn-primary pixel-notch">🏆 Lihat Pencapaian</a>
+          <a href="#kontak" class="btn btn-secondary pixel-notch">✉️ Hubungi Aku</a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo pixel-notch"><img src="photo.jpg" alt="Jallaludin Alghozi" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="pixel-guy" aria-hidden="true">
+          <div class="pg-hair"></div>
+          <div class="pg-head"></div>
+          <div class="pg-body"></div>
+          <div class="pg-arm pg-arm-l"></div>
+          <div class="pg-arm pg-arm-r"></div>
+          <div class="pg-leg pg-leg-l"></div>
+          <div class="pg-leg pg-leg-r"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="scrolldivider">
+    <a href="#tentang" class="scroll-btn pixel-notch notch-sm">▼ SCROLL</a>
+  </div>
+
+  <!-- TENTANG + PENCAPAIAN -->
+  <section id="tentang">
+    <div class="wrap about-flex">
+      <div class="about-copy">
+        <h2 class="about-heading">Tentang Aku</h2>
+        <p>
+          Aku <b style="color:var(--text)">Jallaludin Alghozi</b>, seorang Cybersecurity
+          Enthusiast yang fokus di bug hunting dan vulnerability research. Aku pernah menemukan
+          dan melaporkan kerentanan keamanan ke berbagai instansi — mulai dari NASA (Amerika
+          Serikat) hingga sejumlah lembaga di Indonesia seperti KPK, Kementerian Kesehatan, BMKG,
+          dan Institut Teknologi Bandung — semuanya lewat jalur responsible disclosure.
+        </p>
+        <p>
+          Sertifikat apresiasi di bawah ini adalah bukti dari proses itu. Saya juga telah mendapatkan bounty dari berbagai program bug bounty atas laporan kerentanan yang berhasil saya temukan.
+        </p>
+      </div>
+      <div class="about-stats" id="pencapaian">
+        <div class="stat-card pixel-notch">
+          <div class="stat-icon">🏅</div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Sertifikat Apresiasi Resmi</div>
+        </div>
+        <div class="stat-card pixel-notch">
+          <div class="stat-icon">🌐</div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Instansi Nasional & Internasional</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENGALAMAN -->
+  <section id="pengalaman">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title-box pixel-font">Pengalaman & Highlight</div>
+        <p class="section-sub">"Quest" besar yang sudah aku selesaikan di dunia cybersecurity.</p>
+      </div>
+      <div class="exp-grid">
+        <div class="exp-card pixel-notch">
+          <div class="exp-icon">🚀</div>
+          <span class="tag">MSRC Researcher Celebration</span>
+          <h3>Private Event - Microsoft (Las Vegas)</h3>
+          <p>Diundang ke MSRC Researcher Celebration, Private Event dari Microsoft Security Response Center (MSRC) yang digelar berdampingan dengan Black Hat USA 2026 di Las Vegas.</p>
+        </div>
+        <div class="exp-card pixel-notch">
+          <div class="exp-icon">🎯</div>
+          <span class="tag">NASA Vulnerability Disclosure</span>
+          <h3>Bug Hunting</h3>
+          <p>Menemukan dan melaporkan kerentanan keamanan melalui program Vulnerability Disclosure milik NASA, membantu memperkuat keamanan sistem mereka secara bertanggung jawab.</p>
+        </div>
+        <div class="exp-card pixel-notch">
+          <div class="exp-icon">🐛</div>
+          <span class="tag">Hackerone and Bugcrowd Bug Bounty</span>
+          <h3>Vulnerability Research</h3>
+          <p>Aktif sebagai peneliti keamanan di platform Hackerone, menemukan celah pada berbagai program bug bounty dan berkontribusi pada ekosistem keamanan siber global.</p>
+        </div>
+        <div class="exp-card pixel-notch">
+          <div class="exp-icon">🌱</div>
+          <span class="tag">Writer & Blogger</span>
+          <h3>Writing & Ideas</h3>
+          <p>Saya menulis berbagai write-up tentang kerentanan yang saya temukan sebagai bug hunter, sekaligus menuangkan opini dan perspektif saya tentang berbagai topik yang menarik bagi saya.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERTIFIKAT -->
+  <section id="sertifikat">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title-box pixel-font">Galeri Sertifikat</div>
+        <p class="section-sub">Beberapa "trophy case" dari perjalanan cybersecurity-ku. Klik salah satu kartu untuk lihat versi besarnya.</p>
+      </div>
+      <div class="cert-grid" id="certGrid"></div>
+    </div>
+  </section>
+
+  <!-- WRITE UP -->
+  <section id="writeup">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title-box pixel-font">Write Up</div>
+        <p class="section-sub">Catatan, riset, atau laporan yang pernah saya tulis.</p>
+      </div>
+      <div class="writeup-list">
+        <div class="writeup-item pixel-notch">
+          <div>
+            <div class="wdate">Aug 7 2025</div>
+            <h3>How I Found Sensitive Crypto Transaction Data in a Public JavaScript File</h3>
+            <p>Isi write-up ini tentang cara saya menemukan sensitive data exposure pada JavaScript File.</p>
+          </div>
+          <a href="https://medium.com/@jallaludinozi25/how-i-found-sensitive-crypto-transaction-data-in-a-public-javascript-file-2f33866feaf6" target="_blank" rel="noopener" class="readmore">Baca &rarr;</a>
+        </div>
+        <div class="writeup-item pixel-notch">
+          <div>
+            <div class="wdate">Information Disclosure di LocalStorage</div>
+            <h3>Information Disclosure di LocalStorage</h3>
+            <p>Isi write-up ini tentang saya menemukan sensitive data exposure pada LocalStorage.</p>
+          </div>
+          <a href="https://medium.com/@jallaludinozi25/information-disclosure-di-localstorage-8bb7cbc2d106" target="_blank" rel="noopener" class="readmore">Baca &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak" style="border-bottom:none;">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="title-box pixel-font">Hubungi Aku</div>
+        <p class="section-sub">Ada proyek, kolaborasi, atau sekadar mau ngobrol? Tinggalkan pesan di papan pengumuman ini!</p>
+      </div>
+      <div class="kontak-grid">
+        <div class="form-panel pixel-notch">
+          <div class="field">
+            <label for="fname">Nama Kamu</label>
+            <input id="fname" type="text" placeholder="Tulis namamu di sini...">
+          </div>
+          <div class="field">
+            <label for="femail">Alamat Email</label>
+            <input id="femail" type="email" placeholder="kamu@email.com">
+          </div>
+          <div class="field">
+            <label for="fmsg">Pesan</label>
+            <textarea id="fmsg" placeholder="Tulis pesanmu di sini..."></textarea>
+          </div>
+          <button class="btn btn-primary pixel-notch" onclick="sendMail()">📨 Kirim Pesan!</button>
+          <p class="form-note">*Tombol ini akan membuka aplikasi email kamu menuju masterio16@proton.me.</p>
+        </div>
+        <div class="contact-cards">
+          <div class="contact-card pixel-notch">
+            <div class="cicon">📧</div>
+            <div><div class="clabel">Email</div><div class="cvalue">masterio16@proton.me</div></div>
+          </div>
+          <div class="contact-card pixel-notch">
+            <div class="cicon">💼</div>
+            <div><div class="clabel">LinkedIn</div><div class="cvalue">linkedin.com/in/jallaludin-alghozi-4a1262367</div></div>
+          </div>
+          <div class="contact-card pixel-notch">
+            <div class="cicon">📷</div>
+            <div><div class="clabel">Instagram</div><div class="cvalue">@zcode16_</div></div>
+          </div>
+          <div class="contact-card pixel-notch">
+            <div class="cicon">🐙</div>
+            <div><div class="clabel">GitHub</div><div class="cvalue">github.com/Ozidx</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fbrand">[username].github.io</div>
+  <div class="fcopy">© 2026 Jallaludin Alghozi — Cybersecurity Enthusiast.</div>
+  <div class="fsocials">
+    <a href="mailto:masterio16@proton.me">Email</a>
+    <a href="https://www.linkedin.com/in/jallaludin-alghozi-4a1262367/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://www.instagram.com/zcode16_/" target="_blank" rel="noopener">Instagram</a>
+    <a href="#writeup">Write Up</a>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-box pixel-notch">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <img id="lbImg" src="" alt="">
+    <h3 id="lbName"></h3>
+    <p id="lbIssuer"></p>
+    <a href="#" class="btn btn-secondary pixel-notch" id="lbLink" target="_blank" rel="noopener">Buka Gambar Ukuran Penuh</a>
+  </div>
+</div>
+
+<script>
+  // 5 real certificates, in the order requested
+  const certs = [
+    { name:"NASA", issuer:"Vulnerability Disclosure Recognition · 28 Apr 2026", img:"certs/cert-nasa.jpg", alt:"Sertifikat apresiasi dari NASA" },
+    { name:"Institut Teknologi Bandung", issuer:"CSIRT ITB — Bronze Certificate · 30 Okt 2025", img:"certs/cert-itb.jpg", alt:"Sertifikat CSIRT ITB" },
+    { name:"Komisi Pemberantasan Korupsi", issuer:"Sertifikat Apresiasi CSIRT KPK · 12 Jun 2025", img:"certs/cert-kpk.jpg", alt:"Sertifikat apresiasi CSIRT KPK" },
+    { name:"Kementerian Kesehatan RI", issuer:"Sertifikat CSIRT Kemenkes · 29 Sep 2025", img:"certs/cert-kemenkes.jpg", alt:"Sertifikat CSIRT Kemenkes" },
+    { name:"BMKG", issuer:"Sertifikat Apresiasi CSIRT BMKG · 12 Jun 2025", img:"certs/cert-bmkg.jpg", alt:"Sertifikat apresiasi CSIRT BMKG" },
+  ];
+
+  const grid = document.getElementById('certGrid');
+  certs.forEach((c) => {
+    const card = document.createElement('div');
+    card.className = 'cert-card pixel-notch';
+    card.innerHTML = `
+      <div class="cert-thumb-wrap"><img src="${c.img}" alt="${c.alt}" loading="lazy"></div>
+      <div class="cert-info">
+        <div class="cname">${c.name}</div>
+        <div class="cissuer">${c.issuer}</div>
+      </div>`;
+    card.addEventListener('click', () => openLightbox(c));
+    grid.appendChild(card);
+  });
+
+  function openLightbox(c){
+    document.getElementById('lbImg').src = c.img;
+    document.getElementById('lbImg').alt = c.alt;
+    document.getElementById('lbName').textContent = c.name;
+    document.getElementById('lbIssuer').textContent = c.issuer;
+    document.getElementById('lbLink').href = c.img;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+  document.getElementById('lightbox').addEventListener('click', (e) => { if(e.target.id === 'lightbox') closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+
+  function sendMail(){
+    const name = document.getElementById('fname').value || '(tanpa nama)';
+    const email = document.getElementById('femail').value || '(tanpa email)';
+    const msg = document.getElementById('fmsg').value || '';
+    const subject = encodeURIComponent('Halo dari ' + name);
+    const body = encodeURIComponent('Nama: ' + name + '\nEmail: ' + email + '\n\n' + msg);
+    window.location.href = `mailto:masterio16@proton.me?subject=${subject}&body=${body}`;
+  }
+
+  // Scrollspy for nav
+  const links = Array.from(document.querySelectorAll('#navLinks a'));
+  const sections = links.map(l => document.querySelector(l.getAttribute('href')));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const id = '#' + entry.target.id;
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  sections.forEach(s => s && observer.observe(s));
+</script>
+
+</body>
+</html>
